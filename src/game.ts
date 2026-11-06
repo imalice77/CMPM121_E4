@@ -725,7 +725,6 @@ export class GameScene extends Phaser.Scene implements Arena {
         }
       }
     } else if (this.sector === 2) {
-      // spawnTurret(this, 240, -30)  // old sector 3 opener
       // sector 3, wave 1: one turrets in a line
       for (let i = 0; i < 1; i++) {
         if (t === 60) {
@@ -1388,7 +1387,6 @@ export class GameScene extends Phaser.Scene implements Arena {
     this.shots = sweep(this.shots, spent);
     this.bullets = sweep(this.bullets, spent);
     this.pickups = sweep(this.pickups, spent);
-    // this.enemies = sweep(this.enemies, spent); // simpler?
     // The defeated Warden stays on screen for its finale: drop it undestroyed.
     this.enemies = this.enemies.filter((e) => e.active || e !== this.boss);
     this.enemies = sweep(
