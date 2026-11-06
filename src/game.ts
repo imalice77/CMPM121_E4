@@ -462,12 +462,6 @@ export class GameScene extends Phaser.Scene implements Arena {
           this.enemies.push(enemy);
         }
       }
-      // for (let i = 0; i < 4; i++) {
-      //   if (t === 60) {
-      //     const x = 240 + (i - 1.5) * 64;
-      //     this.enemies.push(new ShmupPrefabSprite(this, x, -30, "drone", 2, 100, 13, 0.015, true, false, x, 1));
-      //   }
-      // }
       // sector 1, wave 2: five drones in a vee
       for (let i = 0; i < 5; i++) {
         if (t === 360 + Math.abs(i - 2) * 10) {
@@ -1286,10 +1280,6 @@ export class GameScene extends Phaser.Scene implements Arena {
       return;
     }
     this.run.hits++;
-    // if (this.player.shielded) {
-    //   this.player.shielded = false
-    //   return
-    // }
     const lostLife = this.player.takeHit();
     this.hud.shudder(lostLife);
     this.cameras.main.shake(lostLife ? 260 : 120, lostLife ? 0.012 : 0.005);
