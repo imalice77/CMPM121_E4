@@ -7,7 +7,12 @@ import {
   Player,
   WIDTH,
 } from "./actors.ts";
-import { ShmupBoss, ShmupPowerUp, ShmupPrefabSprite } from "./prefab.ts";
+import {
+  type PrefabKind,
+  ShmupBoss,
+  ShmupPowerUp,
+  ShmupPrefabSprite,
+} from "./prefab.ts";
 import type { Hud } from "./hud.ts";
 import type { LaunchOptions } from "./main.ts";
 import { AutoPilot, KeyboardPilot, type Pilot } from "./pilots.ts";
@@ -313,19 +318,13 @@ export class GameScene extends Phaser.Scene implements Arena {
     );
   }
 
-  summon(_kind: string, x: number, y: number): void {
+  summon(kind: string, x: number, y: number): void {
     this.enemies.push(
       new ShmupPrefabSprite(
         this,
         x,
         y,
-        "drone",
-        2,
-        100,
-        13,
-        0.015,
-        true,
-        false,
+        kind as PrefabKind,
         x,
         x < WIDTH / 2 ? 1 : -1,
       ),
@@ -452,57 +451,11 @@ export class GameScene extends Phaser.Scene implements Arena {
 
       if (t !== spawnAt) continue;
 
-      let hp: number;
-      let score: number;
-      let radius: number;
-      let dropChance: number;
-      let canShoot: boolean;
-
-      switch (wave.kind) {
-        case "drone":
-          hp = 2;
-          score = 100;
-          radius = 13;
-          dropChance = 0.015;
-          canShoot = true;
-          break;
-
-        case "dart":
-          hp = 1;
-          score = 150;
-          radius = 12;
-          dropChance = 0.015;
-          canShoot = false;
-          break;
-
-        case "turret":
-          hp = 12;
-          score = 400;
-          radius = 19;
-          dropChance = 0.3;
-          canShoot = true;
-          break;
-
-        case "lancer":
-          hp = 4;
-          score = 250;
-          radius = 15;
-          dropChance = 0.06;
-          canShoot = true;
-          break;
-      }
-
       const enemy = new ShmupPrefabSprite(
         this,
         x,
         y,
         wave.kind,
-        hp,
-        score,
-        radius,
-        dropChance,
-        canShoot,
-        false,
         x,
         i % 2 === 0 ? 1 : -1,
       );
