@@ -128,3 +128,5 @@ function restartAnimation(element: HTMLElement, className: string): void {
   void element.offsetWidth;
   element.classList.add(className);
 }
+
+export const hud = new Hud();
