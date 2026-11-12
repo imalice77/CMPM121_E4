@@ -3,16 +3,14 @@ import {
   type Actor,
   type Arena,
   Bullet,
+  Enemy,
+  type EnemyKind,
   HEIGHT,
   Player,
-  WIDTH,
-} from "./actors.ts";
-import {
-  type PrefabKind,
   ShmupBoss,
   ShmupPowerUp,
-  ShmupPrefabSprite,
-} from "./prefab.ts";
+  WIDTH,
+} from "./actors.ts";
 import type { Hud } from "./hud.ts";
 import type { LaunchOptions } from "./main.ts";
 import { AutoPilot, KeyboardPilot, type Pilot } from "./pilots.ts";
@@ -51,7 +49,7 @@ export class GameScene extends Phaser.Scene implements Arena {
   private run;
   private pilot!: Pilot;
   private backdrop!: Backdrop;
-  private enemies: ShmupPrefabSprite[] = [];
+  private enemies: Enemy[] = [];
   private shots: Bullet[] = [];
   private bullets: Bullet[] = [];
   private pickups: ShmupPowerUp[] = [];
@@ -319,16 +317,16 @@ export class GameScene extends Phaser.Scene implements Arena {
   }
 
   summon(kind: string, x: number, y: number): void {
-    this.enemies.push(
-      new ShmupPrefabSprite(
-        this,
-        x,
-        y,
-        kind as PrefabKind,
-        x,
-        x < WIDTH / 2 ? 1 : -1,
-      ),
+    const enemy = new Enemy(
+      this,
+      x,
+      y,
+      kind as EnemyKind,
+      x,
+      x < WIDTH / 2 ? 1 : -1,
     );
+
+    this.enemies.push(enemy);
   }
 
   // one tick of gameplay
@@ -451,7 +449,7 @@ export class GameScene extends Phaser.Scene implements Arena {
 
       if (t !== spawnAt) continue;
 
-      const enemy = new ShmupPrefabSprite(
+      const enemy = new Enemy(
         this,
         x,
         y,
@@ -515,7 +513,7 @@ export class GameScene extends Phaser.Scene implements Arena {
     }
   }
 
-  private destroyEnemy(enemy: ShmupPrefabSprite): void {
+  private destroyEnemy(enemy: Enemy): void {
     enemy.setActive(false);
     this.run.score += enemy.score;
     this.run.kills++;
