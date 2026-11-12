@@ -174,12 +174,12 @@ export class PlayScene extends Phaser.Scene implements Arena {
     );
   }
 
-  summon(kind: string, x: number, y: number): void {
+  summon(kind: EnemyKind, x: number, y: number): void {
     const enemy = new Enemy(
       this,
       x,
       y,
-      kind as EnemyKind,
+      kind,
       x,
       x < WIDTH / 2 ? 1 : -1,
     );
@@ -481,11 +481,6 @@ export class PlayScene extends Phaser.Scene implements Arena {
 
     hud.setBoss(0);
     hud.announce("WARDEN DOWN", "The lanes are open");
-
-    console.log(
-      "victory lap: ship protected =",
-      this.run.bossDefeated,
-    );
 
     // The Warden's fall takes its bullets and escorts with it (no score).
     for (const bullet of this.bullets) {

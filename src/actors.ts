@@ -17,7 +17,7 @@ export interface Arena {
     speed: number,
     heavy?: boolean,
   ): void;
-  summon(kind: string, x: number, y: number): void;
+  summon(kind: EnemyKind, x: number, y: number): void;
 }
 
 /** A circle-collided image advanced once per fixed tick by its scene. */
